@@ -1,0 +1,25 @@
+{
+  "name": "WP Plugin Devcontainer",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/plugin",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [8000, 9003],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "felixfbecker.php-debug",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers"
+      ],
+      "settings": {
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "php.validate.run": "onType"
+      }
+    }
+  },
+  "postCreateCommand": "composer install || true",
+  "containerUser": "root"
+  
+}

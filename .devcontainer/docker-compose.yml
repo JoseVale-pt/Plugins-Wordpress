@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  db:
+    image: mariadb:10.6
+    container_name: jv_plugin_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - '3306:3306'
+
+  wordpress:
+    image: wordpress:6.4-php8.1-apache
+    container_name: jv_plugin_wordpress
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ../:/var/www/html/wp-content/plugins/jv-ai-tool-suggestions:cached
+    ports:
+      - '8000:80'
+
+  workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jv_plugin_workspace
+    volumes:
+      - ../:/workspaces/plugin:cached
+    depends_on:
+      - db
+      - wordpress
+    environment:
+      XDEBUG_MODE: debug
+    ports:
+      - '9003:9003'
+
+volumes:
+  db_data:
