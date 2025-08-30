@@ -18,7 +18,4 @@ Notes:
 - WP-CLI and Composer are available inside the `workspace` container.
 - Xdebug listens on port 9003 and is set to connect back to host.docker.internal. Adjust if necessary.
 
-Wordpress Development
-josevale
-UZq4&Kpw*Ew3x2U3rp
 
